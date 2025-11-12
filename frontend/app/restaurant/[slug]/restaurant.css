@@ -1,0 +1,26 @@
+.restaurant-page {
+  padding: 40px;
+  background: #fafafa;
+  min-height: 100vh;
+}
+
+.back-btn {
+  background: none;
+  border: none;
+  color: #0070f3;
+  cursor: pointer;
+  margin-bottom: 20px;
+  font-size: 16px;
+}
+
+.restaurant-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 30px;
+}
+
+.reviews {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 20px;
+}

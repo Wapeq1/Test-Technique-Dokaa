@@ -1,0 +1,28 @@
+.review-card {
+  background: white;
+  border-radius: 8px;
+  border: 1px solid #eaeaea;
+  padding: 16px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+
+.review-card .author {
+  font-weight: bold;
+  color: #222;
+}
+
+.review-card .rating {
+  color: #eab308;
+  font-size: 14px;
+}
+
+.review-card .text {
+  font-style: italic;
+  color: #555;
+  margin: 8px 0;
+}
+
+.review-card .date {
+  font-size: 12px;
+  color: #999;
+}
