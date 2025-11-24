@@ -1,5 +1,5 @@
 import express from "express";
-import { searchRestaurants, getRestaurantRating } from "../scrapers/deliverooScraper.js";
+import { searchRestaurants, getRestaurantRating, getRestaurantReviews } from "../scrapers/deliverooScraper.js";
 
 const router = express.Router();
 
@@ -97,4 +97,36 @@ router.get("/:slug/info", async (req, res) => {
   }
 });
 
+
+router.get("/:slug/reviews", async (req, res) => {
+  try {
+    const { slug } = req.params;
+
+    if (!slug || slug.trim() === "") {
+      return res.status(400).json({
+        error: "Missing slug parameter"
+      });
+    }
+
+    console.log('Recup reviews for: "${slug}"');
+
+    const reviews = await getRestaurantReviews(slug);
+
+    res.json({
+      slug,
+      count: reviews.length,
+      reviews
+    });
+
+  } catch (error) {
+    console.error("Erreur in /api/restaurant/:slug/reviews:", error);
+    res.status(500).json({
+      error: "Failed to fetch restaurant reviews",
+      message: error.message
+    });
+  }
+});
+
+
 export default router;
+

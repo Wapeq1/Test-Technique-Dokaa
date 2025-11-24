@@ -18,7 +18,6 @@ interface RestaurantCardProps {
 }
 
 export default function RestaurantCard({ restaurant }: RestaurantCardProps) {
-  // Conversion sécurisée de rating en nombre
   const numericRating = restaurant.rating !== undefined ? Number(restaurant.rating) : undefined;
 
   return (
@@ -36,14 +35,15 @@ export default function RestaurantCard({ restaurant }: RestaurantCardProps) {
           />
         ) : (
           <div className="card-image-placeholder">
-            🍽️
           </div>
         )}
       </div>
 
       {/* Contenu de la carte */}
       <div className="card-content">
-        <h3 className="card-title">{restaurant.name}</h3>
+        <h3 className="card-title">
+          {restaurant.name.split("?")[0]}
+        </h3>
         
         <div className="card-meta">
           {numericRating !== undefined && (

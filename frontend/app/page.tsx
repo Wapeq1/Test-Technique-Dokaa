@@ -45,7 +45,16 @@ export default function Home() {
       const restaurantsWithRating = await Promise.all(
         restaurants.map(async (r) => {
           try {
-            const ratingRes = await axios.get(`${apiUrl}/api/restaurant/${r.url.split('/').pop()}/rating`);
+            // Extraction propre du slug sans query params
+            const slug = r.url.split("/").pop()?.split("?")[0];
+
+            if (!slug) {
+              console.warn("Slug introuvable pour :", r);
+              return r;
+            }
+
+            const ratingRes = await axios.get(`${apiUrl}/api/restaurant/${slug}/rating`);
+
             return { ...r, ...ratingRes.data };
           } catch (err) {
             console.warn(`Impossible de récupérer la note pour ${r.name}`);

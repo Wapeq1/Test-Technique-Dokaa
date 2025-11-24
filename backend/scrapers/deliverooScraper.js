@@ -150,3 +150,31 @@ function getDemoRating(slug) {
     url: `https://deliveroo.fr/fr/menu/marseille/${slug}`,
   };
 }
+
+export async function getRestaurantReviews(slug) {
+  const url = `https://deliveroo.fr/fr/menu/marseille/${slug}`;
+
+  const response = await axios.get(url, {
+    headers: {
+      "User-Agent":
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+    },
+  });
+
+  const $ = cheerio.load(response.data);
+
+  const reviews = [];
+
+  // Composants React Deliveroo → classes dynamiques
+  $('[data-testid="review"], [class*="ReviewCard"]').each((i, el) => {
+    const author =
+      $(el).find('[class*="User"]').text().trim() || "Client Deliveroo";
+    const date = $(el).find("time").attr("datetime") || null;
+    const text = $(el).find('[class*="Comment"]').text().trim();
+    const rating = $(el).find("svg[aria-label*=star]").length || null;
+
+    reviews.push({ author, date, text, rating });
+  });
+
+  return reviews;
+}
